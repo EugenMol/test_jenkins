@@ -5,15 +5,20 @@ pipeline {
             steps {
                 echo "---Checkout----"
                 git url: "https://github.com/EugenMol/test_jenkins.git", branch: "main"
-                sh "ls -la"
+                sh '''
+                ls -la
+                
+                
+                '''
                 }
             }
         stage('Check_Dockerfike') {
             steps {
                 echo "-----Check_Dockerfike-----"
                 sh '''
+                    docker info
                     docker run --rm -i hadolint/hadolint < Dockerfile
-                    echo "&?"
+                    echo $?
                 '''
             }
         }
