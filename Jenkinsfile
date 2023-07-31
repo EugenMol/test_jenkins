@@ -4,19 +4,17 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "---Checkout----"
-                dir("testgit") {
-                git(
-                    url: "git@github.com:EugenMol/test_jenkins.git",
-                    branch: "main",
-                    changelog: true,
-                    poll: true
-                    )
-                    }
+                git url: "https://github.com/EugenMol/test_jenkins.git", branch: "main"
+                sh "ls -la"
                 }
             }
-        stage('Build') {
+        stage('Check_Dockerfike') {
             steps {
-                echo "-----Build-----"
+                echo "-----Check_Dockerfike-----"
+                sh '''
+                    docker run --rm -i hadolint/hadolint < Dockerfile
+                    echo "&?"
+                '''
             }
         }
         stage('Test'){
